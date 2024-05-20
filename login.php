@@ -49,22 +49,22 @@ if (isset($_POST['login'])) {
       <input type="password" class="form-control <?php if (!empty($error)) echo 'error-input'; ?>" name="pass" placeholder="Enter password">
     </div>
     <?php if (!empty($error)) : ?>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <?php echo $error; ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        <?php endif; ?>
+     <div class="alert alert-danger alert-dismissible fade show" role="alert">
+     <?php echo $error; ?>
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php endif; ?>
 
-                        <div class="container">
-                          <div class="row gx-1">
-                            <div class="col">
-                            <input type="submit" class="btn btn-primary btn-block" value="Log In" name="login">
-                            </div>
-                            <div class="col">
-                            <a type="submit" class="btn btn-danger btn-block" href="signup.php">Sign Up</a>
-                            </div>
-                          </div>
-                        </div>
+    <div class="container">
+    <div class="row gx-1">
+    <div class="col">
+    <input type="submit" class="btn btn-primary btn-block" value="Log In" name="login">
+    </div>
+    <div class="col">
+   <a type="submit" class="btn btn-danger btn-block" href="signup.php">Sign Up</a>
+   </div>
+    </div>
+   </div>
    
    
   </form>
