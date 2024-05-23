@@ -33,11 +33,11 @@ if(isset($_POST['del'])){
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <!-- For Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link rel="stylesheet" href="./includes/style.css">
+  <link rel="stylesheet" href="includes/style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
-<?php include('navbar.php');?>
+<?php include('./includes/navbar.php');?>
 
 <div class="container user-info rounded shadow p-3 my-2">
 <h2 class="text-center mb-2">User Table</h2>
@@ -99,6 +99,41 @@ if(isset($_POST['del'])){
     </table>
   </div>
 </div>
+
+<div class="container my-5">
+        <h2 class="text-center">User Profiles</h2>
+        <div class="card-container">
+            <?php
+            $data = $con->view();
+            foreach ($data as $rows) {
+            ?>
+            <div class="card">
+                <div class="card-body text-center">
+                    <?php if (!empty($rows['user_profile_picture'])): ?>
+                        <img src="<?php echo htmlspecialchars($rows['user_profile_picture']); ?>" alt="Profile Picture" class="profile-img">
+                    <?php else: ?>
+                        <img src="path/to/default/profile/pic.jpg" alt="Default Profile Picture" class="profile-img">
+                    <?php endif; ?>
+                    <h5 class="card-title"><?php echo htmlspecialchars($rows['FirstName']) . ' ' . htmlspecialchars($rows['LastName']); ?></h5>
+                    <p class="card-text"><strong>Birthday:</strong> <?php echo htmlspecialchars($rows['Birthday']); ?></p>
+                    <p class="card-text"><strong>Sex:</strong> <?php echo htmlspecialchars($rows['Sex']); ?></p>
+                    <p class="card-text"><strong>Username:</strong> <?php echo htmlspecialchars($rows['user']); ?></p>
+                    <p class="card-text"><strong>Address:</strong> <?php echo ucwords(htmlspecialchars($rows['Address'])); ?></p>
+                    <form action="update.php" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($rows['user_id']); ?>">
+                        <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                    </form>
+                    <form method="POST" class="d-inline">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($rows['user_id']); ?>">
+                        <input type="submit" name="delete" class="btn btn-danger btn-sm" value="Delete" onclick="return confirm('Are you sure you want to delete this user?')">
+                    </form>
+                </div>
+            </div>
+            <?php
+            }
+            ?>
+        </div>
+    </div>
 </div>
  
 <!-- Bootstrap JS and dependencies -->

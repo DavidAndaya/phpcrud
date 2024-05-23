@@ -1,6 +1,6 @@
 <?php
 // session_start();
-
+ 
 require_once('classes/database.php');
 $con = new database();
 $error = "";
@@ -26,15 +26,15 @@ if (isset($_POST['multisave'])) {
       // Handle file upload
       $target_dir = "uploads/";
       $original_file_name = basename($_FILES["profile_picture"]["name"]);
-      
+     
       // NEW CODE: Initialize $new_file_name with $original_file_name
-       $new_file_name = $original_file_name; 
-      
-      
+       $new_file_name = $original_file_name;
+     
+     
        $target_file = $target_dir . $original_file_name;
        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
        $uploadOk = 1;
-      
+     
       // Check if file already exists and rename if necessary
     // Check if file already exists and rename if necessary
     if (file_exists($target_file)) {
@@ -140,9 +140,10 @@ if (isset($_POST['multisave'])) {
         </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" name="email" placeholder="Enter email" required>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
             <div class="valid-feedback">Looks good!</div>
             <div class="invalid-feedback">Please enter a valid email.</div>
+            <div id="emailFeedback" class="invalid-feedback"></div> <!-- New feedback div -->
           </div>
           <div class="form-group">
             <label for="password">Password:</label>
@@ -299,6 +300,38 @@ $(document).ready(function(){
  
 </script>
  
+<script>
+$(document).ready(function(){
+    $('#email').on('input', function(){
+        var email = $(this).val();
+        if(email.length > 0) {
+            $.ajax({
+                url: 'check_email.php',
+                method: 'POST',
+                data: {email: email},
+                dataType: 'json',
+                success: function(response) {
+                    if(response.exists) {
+                        $('#email').removeClass('is-valid').addClass('is-invalid');
+                        $('#emailFeedback').text('Email is already taken.');
+                        $('#nextButton').prop('disabled', true); // Disable the Next button
+                    } else {
+                        $('#email').removeClass('is-invalid').addClass('is-valid');
+                        $('#emailFeedback').text('');
+                        $('#nextButton').prop('disabled', false); // Enable the Next button
+                    }
+                }
+            });
+        } else {
+            $('#email').removeClass('is-valid is-invalid');
+            $('#emailFeedback').text('');
+            $('#nextButton').prop('disabled', false); // Enable the Next button if username is empty
+        }
+    });
+});
+ 
+</script>
+ 
 <!-- Script for Form Validation -->
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -428,4 +461,3 @@ function validateStep(step) {
  
   </body>
   </html>
- 
