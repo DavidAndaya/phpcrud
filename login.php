@@ -17,6 +17,28 @@ if (isset($_POST['login'])) {
   } else {
       $error = "Incorrect username or password. Please try again.";
   }
+
+  if (isset($_POST['login'])) {
+    $username = $_POST['user'];
+    $password = $_POST['pass'];
+    $result = $con->check($username, $password);
+  
+    if ($result) {
+        $_SESSION['user'] = $result['user'];
+        $_SESSION['account_type'] = $result['account_type'];
+        $_SESSION['user_id'] = $result['user_id'];
+        $_SESSION['user_profile_picture'] = $result['user_profile_picture'];
+        // Redirect based on account type
+        if ($result['account_type'] == 0) {
+          header('location:index.php');
+        } else if ($result['account_type'] == 1) {
+          header('location:user_account.php');
+        }
+        exit();
+    } else {
+        $error = "Incorrect username or password. Please try again.";
+    }
+  }
 }
 
 ?>
