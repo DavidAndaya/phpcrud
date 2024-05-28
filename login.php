@@ -27,7 +27,7 @@ if (isset($_POST['login'])) {
         $_SESSION['user'] = $result['user'];
         $_SESSION['account_type'] = $result['account_type'];
         $_SESSION['user_id'] = $result['user_id'];
-        $_SESSION['user_profile_picture'] = $result['user_profile_picture'];
+    
         // Redirect based on account type
         if ($result['account_type'] == 0) {
           header('location:index.php');
@@ -51,7 +51,7 @@ if (isset($_POST['login'])) {
   <link rel="stylesheet" href="./bootstrap-5.3.3-dist/css/bootstrap.css">
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="includes/style.css">
   <style>
   
   </style>
