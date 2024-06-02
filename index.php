@@ -5,10 +5,10 @@ $con = new database();
 session_start();
 
 
-if (!isset($_SESSION['user']) || $_SESSION['account_type'] != 0) {
-  header('location:login.php');
-  exit();
-}
+// if (!isset($_SESSION['user']) || $_SESSION['account_type'] != 0) {
+//   header('location:login.php');
+//   exit();
+// }
 
 if(isset($_POST['del'])){
     $user_id = $_POST['id'];
@@ -80,22 +80,26 @@ if(isset($_POST['del'])){
           <td><?php echo ucwords($row['Address']);?></td>
           <td>
  
-        <!-- Edit button -->
-          <form action="update.php" method="POST" style="display: inline;">
-            <input type="hidden" name="id" value="<?php echo $row['user_id']; ?>">
-            <button type="submit"  name="edit" class="btn btn-primary btn-sm">Edit</button>
-          </form>
-        <!-- Delete button -->
-        <form method="POST" style="display: inline;">
-            <input type="hidden" name="id" value="<?php echo $row['user_id']; ?>">
-            <input type="submit"  name="del" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')">
+          <div class="btn-group" role="group">
+    <form action="update.php" method="post" class="d-inline">
+    <input type="hidden" name="id" value="<?php echo $rows['user_id']; ?>">
+    <button type="submit" class="btn btn-warning btn-sm">
+    <i class="fas fa-edit"></i>
+        </button>
         </form>
-          </td>
+    <form method="POST" class="d-inline">
+    <input type="hidden" name="id" value="<?php echo $rows['user_id']; ?>">
+    <button type="submit" name="delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')">
+    <i class="fas fa-trash-alt"></i>
+        </button>
+        </form>
+    </div>
+        </td>
         </tr>
-        <?php
-      }
-      ?>
- 
+        
+     <?php
+       }
+       ?>
       </tbody>
     </table>
   </div>
